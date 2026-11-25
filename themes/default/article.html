@@ -264,13 +264,13 @@
                 </a>
                 
                 <div class="d-flex align-items-center gap-2">
-                    <button onclick="toggleArticleBookmark()" class="btn btn-outline-dark rounded-3 px-2 py-2 d-flex align-items-center gap-1" id="article-bookmark-btn">
+                    <button onclick="toggleArticle收藏()" class="btn btn-outline-dark rounded-3 px-2 py-2 d-flex align-items-center gap-1" id="article-bookmark-btn">
                         <i class="fas fa-bookmark"></i>
-                        <span class="d-none d-sm-inline">Bookmark</span>
+                        <span class="d-none d-sm-inline">收藏</span>
                     </button>
                     <a href="/" class="btn btn-outline-dark rounded-3 px-2 py-2 d-flex align-items-center gap-1">
                         <i class="fas fa-home"></i>
-                        <span class="d-none d-sm-inline">Home</span>
+                        <span class="d-none d-sm-inline">首页</span>
                     </a>
                 </div>
             </div>
@@ -302,9 +302,9 @@
                     <div id="article-content" class="article-content">
                         <div class="text-center py-5">
                             <div class="spinner-border text-primary mb-3" role="status">
-                                <span class="visually-hidden">Loading...</span>
+                                <span class="visually-hidden">加载中…</span>
                             </div>
-                            <p class="text-muted">Loading content...</p>
+                            <p class="text-muted">正在加载内容…</p>
                         </div>
                     </div>
                 </div>
@@ -313,22 +313,22 @@
                     <div class="d-flex flex-column sm:flex-row justify-content-between align-items-center gap-4">
                         <a href="/" class="btn btn-primary-custom text-white">
                             <i class="fas fa-arrow-left me-2"></i>
-                            Back to Home
+                            回到首页
                         </a>
                         
                         <div class="d-flex align-items-center gap-2">
-                            <span class="text-muted small me-2">Share this article</span>
+                            <span class="text-muted small me-2">分享这篇文章</span>
                             <div class="d-flex gap-2">
-                            <button onclick="shareOnTwitter()" class="btn-share" title="Share on Twitter" aria-label="Share on Twitter (X)">
+                            <button onclick="shareOnTwitter()" class="btn-share" title="分享到 X" aria-label="分享到 X">
                                 <i class="fab fa-twitter" aria-hidden="true"></i>
                                 </button>
-                            <button onclick="shareOnFacebook()" class="btn-share" title="Share on Facebook" aria-label="Share on Facebook">
+                            <button onclick="shareOnFacebook()" class="btn-share" title="分享到 Facebook" aria-label="分享到 Facebook">
                                 <i class="fab fa-facebook" aria-hidden="true"></i>
                                 </button>
-                            <button onclick="shareOnLinkedIn()" class="btn-share" title="Share on LinkedIn" aria-label="Share on LinkedIn">
+                            <button onclick="shareOnLinkedIn()" class="btn-share" title="分享到 LinkedIn" aria-label="分享到 LinkedIn">
                                 <i class="fab fa-linkedin" aria-hidden="true"></i>
                                 </button>
-                            <button onclick="copyShareLink()" class="btn-share border-0 bg-transparent" title="Copy link" aria-label="Copy link to clipboard">
+                            <button onclick="copyShareLink()" class="btn-share border-0 bg-transparent" title="复制链接" aria-label="复制链接到剪贴板">
                                 <i class="fas fa-link" aria-hidden="true"></i>
                                 </button>
                             </div>
@@ -374,7 +374,7 @@
         async function copyShareLink() {
             try {
                 await navigator.clipboard.writeText(getShareUrl());
-                showNotification('Link copied to clipboard!', 'success');
+                showNotification('链接已复制到剪贴板！', 'success');
             } catch (err) {
                 const textArea = document.createElement('textarea');
                 textArea.value = getShareUrl();
@@ -382,7 +382,7 @@
                 textArea.select();
                 document.execCommand('copy');
                 document.body.removeChild(textArea);
-                showNotification('Link copied to clipboard!', 'success');
+                showNotification('链接已复制到剪贴板！', 'success');
             }
         }
 
@@ -428,7 +428,7 @@
             return parts[parts.length - 1];
         }
 
-        function getArticleBookmarks() {
+        function getArticle收藏() {
             try {
                 return JSON.parse(localStorage.getItem('blog_bookmarks') || '[]');
             } catch {
@@ -436,34 +436,34 @@
             }
         }
 
-        function saveArticleBookmarks(bookmarks) {
+        function saveArticle收藏(bookmarks) {
             try {
                 localStorage.setItem('blog_bookmarks', JSON.stringify(bookmarks));
             } catch (error) {
-                console.error('Error saving bookmarks:', error);
+                console.error('保存收藏出错：', error);
             }
         }
 
-        function isArticleBookmarked(permalink) {
-            const bookmarks = getArticleBookmarks();
+        function isArticle收藏ed(permalink) {
+            const bookmarks = getArticle收藏();
             return bookmarks.some(bookmark => bookmark.permalink === permalink);
         }
 
-        function toggleArticleBookmark() {
+        function toggleArticle收藏() {
             const permalink = getArticlePermalink();
             const title = document.title.replace(' - {{siteName}}', '');
-            const bookmarks = getArticleBookmarks();
+            const bookmarks = getArticle收藏();
             const existingIndex = bookmarks.findIndex(bookmark => bookmark.permalink === permalink);
             const btn = document.getElementById('article-bookmark-btn');
             
             if (existingIndex > -1) {
                 bookmarks.splice(existingIndex, 1);
-                saveArticleBookmarks(bookmarks);
+                saveArticle收藏(bookmarks);
                 if (btn) {
                     btn.classList.remove('text-primary');
                     btn.classList.add('text-dark');
                 }
-                showNotification('Bookmark removed', 'warning');
+                showNotification('已取消收藏', 'warning');
             } else {
                 bookmarks.push({
                     permalink,
@@ -472,12 +472,12 @@
                     label: '',
                     bookmarkedAt: new Date().toISOString()
                 });
-                saveArticleBookmarks(bookmarks);
+                saveArticle收藏(bookmarks);
                 if (btn) {
                     btn.classList.remove('text-dark');
                     btn.classList.add('text-primary');
                 }
-                showNotification('Article bookmarked!', 'success');
+                showNotification('已收藏！', 'success');
             }
         }
 
@@ -490,7 +490,7 @@
             
             const permalink = getArticlePermalink();
             const btn = document.getElementById('article-bookmark-btn');
-            if (btn && isArticleBookmarked(permalink)) {
+            if (btn && isArticle收藏ed(permalink)) {
                 btn.classList.remove('text-dark');
                 btn.classList.add('text-primary');
             }
@@ -507,7 +507,7 @@
                 contentElement.innerHTML = `
                     <div class="text-center py-5">
                         <i class="fas fa-file-alt text-muted mb-3" style="font-size: 2rem; opacity: 0.3;"></i>
-                        <p class="text-muted">No content available for this article.</p>
+                        <p class="text-muted">这篇文章暂无内容。</p>
                     </div>
                 `;
                 return;
@@ -521,7 +521,7 @@
                                 try {
                                     return hljs.highlight(code, { language: lang }).value;
                                 } catch (err) {
-                                    console.warn('Error highlighting code:', err);
+                                    console.warn('代码高亮出错：', err);
                                 }
                             }
                             return hljs.highlightAuto(code).value;
@@ -540,10 +540,10 @@
                         }
                     });
                 } catch (error) {
-                    console.error('Error parsing markdown:', error);
+                    console.error('解析 Markdown 出错：', error);
                     contentElement.innerHTML = `
                         <div class="alert alert-warning">
-                            <p class="mb-0">Error rendering content. Showing raw text instead.</p>
+                            <p class="mb-0">内容渲染失败，改显原文。</p>
                         </div>
                         <pre class="whitespace-pre-wrap bg-white p-4 rounded-3 text-sm overflow-x-auto border">${rawContent}</pre>
                     `;

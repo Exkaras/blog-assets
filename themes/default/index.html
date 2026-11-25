@@ -289,7 +289,7 @@
                 <div class="d-flex align-items-center gap-2">
                     <a href="/bookmarks" class="btn btn-outline-dark rounded-3 px-2 py-2 d-flex align-items-center gap-1">
                         <i class="fas fa-bookmark"></i>
-                        <span class="d-none d-sm-inline">Favorites</span>
+                        <span class="d-none d-sm-inline">我的收藏</span>
                     </a>
                     <a href="/rss.xml" class="btn btn-outline-dark rounded-3 px-2 py-2 d-flex align-items-center gap-1">
                         <i class="fas fa-rss"></i>
@@ -305,31 +305,31 @@
         <div class="container position-relative z-10">
             <div class="text-center py-5">
                 <span class="badge bg-dark bg-opacity-10 text-dark px-4 py-2 rounded-pill mb-4 fs-6">
-                    <i class="fas fa-sparkles me-2"></i>Welcome to our blog
+                    <i class="fas fa-sparkles me-2"></i>欢迎来到我们的博客
                 </span>
                 <h1 class="display-4 fw-bold mb-3">{{siteName}}</h1>
                 <p class="lead text-white-75 mb-4 mx-auto" style="max-width: 600px;">{{siteDescription}}</p>
                 <div class="d-flex flex-column flex-sm-row justify-content-center gap-3">
                     <a href="#articles" class="btn btn-light text-primary px-4 py-2 rounded-3 fw-semibold">
-                        <i class="fas fa-compass me-2"></i>Explore Articles
+                        <i class="fas fa-compass me-2"></i>浏览文章
                     </a>
                     <a href="/rss.xml" class="btn btn-outline-custom px-4 py-2 rounded-3 fw-semibold">
-                        <i class="fas fa-rss me-2"></i>Subscribe
+                        <i class="fas fa-rss me-2"></i>订阅
                     </a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Articles Section -->
+    <!-- 文章 Section -->
     <main id="articles" class="flex-1 py-5">
         <div class="container">
             <div class="text-center mb-5">
                 <span class="badge bg-primary bg-gradient bg-opacity-10 text-primary px-3 py-2 rounded-pill mb-3 fw-semibold">
-                    Latest Posts
+                    最新文章
                 </span>
-                <h2 class="fw-bold text-dark mb-2">Discover Our Stories</h2>
-                <p class="text-muted mx-auto" style="max-width: 500px;">Explore our collection of articles, insights, and ideas that inspire</p>
+                <h2 class="fw-bold text-dark mb-2">发现好故事</h2>
+                <p class="text-muted mx-auto" style="max-width: 500px;">文章、见解与灵感，都在这里</p>
             </div>
             
             <div id="articles-container" class="row g-4" aria-live="polite">
@@ -337,9 +337,9 @@
                 <div class="col-12">
                     <div class="text-center py-5">
                         <div class="spinner-border text-primary mb-3" role="status">
-                            <span class="visually-hidden">Loading...</span>
+                            <span class="visually-hidden">加载中…</span>
                         </div>
-                        <p class="text-muted">Loading articles...</p>
+                        <p class="text-muted">正在加载文章…</p>
                     </div>
                 </div>
             </div>
@@ -354,29 +354,29 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content border-0 shadow-lg" style="border-radius: 20px;">
                 <div class="modal-header border-0 pb-0">
-                    <h5 class="modal-title fw-bold">Share Article</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close modal"></button>
+                    <h5 class="modal-title fw-bold">分享文章</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="关闭"></button>
                 </div>
                 <div class="modal-body">
                     <p id="share-article-title" class="text-muted mb-4 p-3 bg-light rounded-3"></p>
                     <div class="row g-3">
                         <div class="col-3">
-                            <button onclick="shareOnPlatform('twitter')" class="share-btn w-100" aria-label="Share on Twitter (X)">
+                            <button onclick="shareOnPlatform('twitter')" class="share-btn w-100" aria-label="分享到 X">
                                 <i class="fab fa-twitter text-info" aria-hidden="true"></i>
                             </button>
                         </div>
                         <div class="col-3">
-                            <button onclick="shareOnPlatform('facebook')" class="share-btn w-100" aria-label="Share on Facebook">
+                            <button onclick="shareOnPlatform('facebook')" class="share-btn w-100" aria-label="分享到 Facebook">
                                 <i class="fab fa-facebook text-primary" aria-hidden="true"></i>
                             </button>
                         </div>
                         <div class="col-3">
-                            <button onclick="shareOnPlatform('linkedin')" class="share-btn w-100" aria-label="Share on LinkedIn">
+                            <button onclick="shareOnPlatform('linkedin')" class="share-btn w-100" aria-label="分享到 LinkedIn">
                                 <i class="fab fa-linkedin text-primary" aria-hidden="true"></i>
                             </button>
                         </div>
                         <div class="col-3">
-                            <button onclick="copyArticleLink()" class="share-btn w-100" aria-label="Copy link to article">
+                            <button onclick="copyArticleLink()" class="share-btn w-100" aria-label="复制文章链接">
                                 <i class="fas fa-link text-primary" aria-hidden="true"></i>
                             </button>
                         </div>
@@ -404,14 +404,14 @@
 
         document.addEventListener('DOMContentLoaded', function() {
             shareModal = new bootstrap.Modal(document.getElementById('share-modal'));
-            loadArticles();
+            load文章();
         });
 
-        async function loadArticles(page = 1) {
+        async function load文章(page = 1) {
             try {
                 currentPage = page;
                 const response = await fetch(`/api/articles?paginate=true&page=${page}&pageSize=${pageSize}`);
-                if (!response.ok) throw new Error('Failed to load articles');
+                if (!response.ok) throw new Error('文章加载失败');
                 const data = await response.json();
                 const articles = data.articles || [];
                 const pagination = data.pagination || {};
@@ -425,10 +425,10 @@
                             <div class="mb-4">
                                 <i class="fas fa-newspaper text-muted" style="font-size: 3rem; opacity: 0.3;"></i>
                             </div>
-                            <h3 class="fw-bold text-dark mb-2">No Articles Yet</h3>
-                            <p class="text-muted mb-4">We're working on bringing you amazing content. Check back soon!</p>
+                            <h3 class="fw-bold text-dark mb-2">还没有文章</h3>
+                            <p class="text-muted mb-4">精彩内容正在路上，过些时候再来看看吧！</p>
                             <a href="/admin/" class="btn btn-primary-custom text-white">
-                                <i class="fas fa-plus me-2"></i>Create First Article
+                                <i class="fas fa-plus me-2"></i>写第一篇文章
                             </a>
                         </div>
                     `;
@@ -447,7 +447,7 @@
                 };
 
                 container.innerHTML = articles.map(article => {
-                    const isBookmarked = isArticleBookmarked(article.permalink);
+                    const is收藏ed = isArticle收藏ed(article.permalink);
                     const safeTitle = escapeHtml(article.title);
                     const safeImg = escapeHtml(article.img);
                     const safePermalink = escapeHtml(article.permalink);
@@ -482,19 +482,19 @@
                                 <p class="text-muted small mb-0 line-clamp-3">${safeExcerpt}</p>
                                 <div class="d-flex justify-content-between align-items-center pt-3 border-top mt-3">
                                     <a href="/article/${safePermalink}" class="text-primary text-decoration-none fw-semibold small">
-                                        Read More <i class="fas fa-arrow-right ms-1"></i>
+                                        阅读全文 <i class="fas fa-arrow-right ms-1"></i>
                                     </a>
                                     <div class="d-flex gap-2">
-                                        <button onclick="event.stopPropagation(); toggleBookmark('${safePermalink}', '${safeTitle}', '${safeImg}', '${safeLabel}')" 
-                                                class="bookmark-btn ${isBookmarked ? 'bookmarked' : ''}"
-                                                title="${isBookmarked ? 'Remove bookmark' : 'Bookmark article'}"
-                                                aria-label="${isBookmarked ? 'Remove bookmark for ' + safeTitle : 'Bookmark article ' + safeTitle}">
+                                        <button onclick="event.stopPropagation(); toggle收藏('${safePermalink}', '${safeTitle}', '${safeImg}', '${safeLabel}')" 
+                                                class="bookmark-btn ${is收藏ed ? 'bookmarked' : ''}"
+                                                title="${is收藏ed ? '取消收藏' : '收藏文章'}"
+                                                aria-label="${is收藏ed ? '取消收藏：' + safeTitle : '收藏文章 ' + safeTitle}">
                                             <i class="fas fa-bookmark" aria-hidden="true"></i>
                                         </button>
                                         <button onclick="event.stopPropagation(); shareArticle('${safePermalink}', '${safeTitle}')" 
                                                 class="share-btn"
-                                                title="Share article"
-                                                aria-label="Share article ${safeTitle}">
+                                                title="分享文章"
+                                                aria-label="分享文章 ${safeTitle}">
                                             <i class="fas fa-share-alt" aria-hidden="true"></i>
                                         </button>
                                     </div>
@@ -507,17 +507,17 @@
 
                 updatePaginationUI(pagination);
             } catch (error) {
-                console.error('Error loading articles:', error);
+                console.error('加载文章出错：', error);
                 const container = document.getElementById('articles-container');
                 container.innerHTML = `
                     <div class="col-12 text-center py-5">
                         <div class="mb-4">
                             <i class="fas fa-exclamation-triangle text-warning" style="font-size: 3rem;"></i>
                         </div>
-                        <h3 class="fw-bold text-dark mb-2">Oops! Something went wrong</h3>
-                        <p class="text-muted mb-4">We couldn't load the articles. Please try again.</p>
-                        <button onclick="loadArticles()" class="btn btn-primary-custom text-white">
-                            <i class="fas fa-redo me-2"></i>Try Again
+                        <h3 class="fw-bold text-dark mb-2">哎呀，出错了</h3>
+                        <p class="text-muted mb-4">文章加载失败，请重试。</p>
+                        <button onclick="load文章()" class="btn btn-primary-custom text-white">
+                            <i class="fas fa-redo me-2"></i>重试
                         </button>
                     </div>
                 `;
@@ -535,9 +535,9 @@
 
             let html = '<div class="d-flex align-items-center gap-2 flex-wrap justify-content-center">';
             
-            html += `<button onclick="loadArticles(${pagination.page - 1})" 
+            html += `<button onclick="load文章(${pagination.page - 1})" 
                 class="pagination-btn"
-                aria-label="Previous page"
+                aria-label="上一页"
                 ${!pagination.hasPrevPage ? 'disabled' : ''}>
                 <i class="fas fa-chevron-left" aria-hidden="true"></i>
             </button>`;
@@ -546,28 +546,28 @@
             const endPage = Math.min(pagination.totalPages, pagination.page + 2);
 
             for (let i = startPage; i <= endPage; i++) {
-                html += `<button onclick="loadArticles(${i})" 
+                html += `<button onclick="load文章(${i})" 
                     class="pagination-btn ${i === pagination.page ? 'active' : ''}"
-                    aria-label="Page ${i}"
+                    aria-label="第 ${i} 页"
                     ${i === pagination.page ? 'aria-current="page"' : ''}>
                     ${i}
                 </button>`;
             }
 
-            html += `<button onclick="loadArticles(${pagination.page + 1})" 
+            html += `<button onclick="load文章(${pagination.page + 1})" 
                 class="pagination-btn"
-                aria-label="Next page"
+                aria-label="下一页"
                 ${!pagination.hasNextPage ? 'disabled' : ''}>
                 <i class="fas fa-chevron-right" aria-hidden="true"></i>
             </button>`;
 
             html += '</div>';
-            html += `<p class="text-muted small mb-0">Page ${pagination.page} of ${pagination.totalPages} &bull; ${pagination.totalArticles} articles</p>`;
+            html += `<p class="text-muted small mb-0">Page ${pagination.page} of ${pagination.totalPages} &bull; ${pagination.total文章} articles</p>`;
 
             container.innerHTML = html;
         }
 
-        function getBookmarks() {
+        function get收藏() {
             try {
                 return JSON.parse(localStorage.getItem('blog_bookmarks') || '[]');
             } catch {
@@ -575,27 +575,27 @@
             }
         }
 
-        function saveBookmarks(bookmarks) {
+        function save收藏(bookmarks) {
             try {
                 localStorage.setItem('blog_bookmarks', JSON.stringify(bookmarks));
             } catch (error) {
-                console.error('Error saving bookmarks:', error);
+                console.error('保存收藏出错：', error);
             }
         }
 
-        function isArticleBookmarked(permalink) {
-            const bookmarks = getBookmarks();
+        function isArticle收藏ed(permalink) {
+            const bookmarks = get收藏();
             return bookmarks.some(bookmark => bookmark.permalink === permalink);
         }
 
-        function toggleBookmark(permalink, title, img, label) {
-            const bookmarks = getBookmarks();
+        function toggle收藏(permalink, title, img, label) {
+            const bookmarks = get收藏();
             const existingIndex = bookmarks.findIndex(bookmark => bookmark.permalink === permalink);
             
             if (existingIndex > -1) {
                 bookmarks.splice(existingIndex, 1);
-                saveBookmarks(bookmarks);
-                showNotification('Bookmark removed', 'warning');
+                save收藏(bookmarks);
+                showNotification('已取消收藏', 'warning');
             } else {
                 bookmarks.push({
                     permalink,
@@ -604,11 +604,11 @@
                     label,
                     bookmarkedAt: new Date().toISOString()
                 });
-                saveBookmarks(bookmarks);
-                showNotification('Article bookmarked!', 'success');
+                save收藏(bookmarks);
+                showNotification('已收藏！', 'success');
             }
             
-            loadArticles(currentPage);
+            load文章(currentPage);
         }
 
         function shareArticle(permalink, title) {
@@ -645,9 +645,9 @@
                     document.execCommand('copy');
                     document.body.removeChild(textArea);
                 }
-                showNotification('Link copied!', 'success');
+                showNotification('链接已复制！', 'success');
             } catch (err) {
-                showNotification('Failed to copy link', 'error');
+                showNotification('复制链接失败', 'error');
             }
             shareModal.hide();
         }

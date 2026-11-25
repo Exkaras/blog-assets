@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard - {{siteName}}</title>
+    <title>管理后台 - {{siteName}}</title>
     
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <!-- Bootstrap CSS -->
@@ -274,18 +274,18 @@
                         <i class="fas fa-gauge-high text-white fs-5"></i>
                     </div>
                     <div>
-                        <h1 class="fs-5 fw-bold text-dark mb-0">Admin Dashboard</h1>
-                        <p class="text-muted small mb-0 d-none d-sm-block">Manage your blog content</p>
+                        <h1 class="fs-5 fw-bold text-dark mb-0">管理后台</h1>
+                        <p class="text-muted small mb-0 d-none d-sm-block">管理你的博客内容</p>
                     </div>
                 </div>
                 <div class="d-flex align-items-center gap-2">
                     <a href="/" class="btn btn-outline-dark rounded-3 px-3 py-2 d-flex align-items-center gap-2">
                         <i class="fas fa-eye"></i>
-                        <span class="d-none d-sm-inline">View Blog</span>
+                        <span class="d-none d-sm-inline">查看博客</span>
                     </a>
                     <button onclick="logout()" class="btn btn-outline-danger rounded-3 px-3 py-2 d-flex align-items-center gap-2">
                         <i class="fas fa-sign-out-alt"></i>
-                        <span class="d-none d-sm-inline">Logout</span>
+                        <span class="d-none d-sm-inline">退出登录</span>
                     </button>
                 </div>
             </div>
@@ -300,8 +300,8 @@
                     <div class="icon-wrapper mx-auto mb-3" style="background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);">
                         <i class="fas fa-plus text-white fs-4"></i>
                     </div>
-                    <h3 class="fw-semibold text-dark mb-1">New Article</h3>
-                    <p class="text-muted d-none d-md-block small mb-0">Create new content</p>
+                    <h3 class="fw-semibold text-dark mb-1">新建文章</h3>
+                    <p class="text-muted d-none d-md-block small mb-0">创作新内容</p>
                 </a>
             </div>
 
@@ -310,70 +310,70 @@
                     <div class="icon-wrapper mx-auto mb-3" style="background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%);">
                         <i class="fas fa-user-gear text-white fs-4"></i>
                     </div>
-                    <h3 class="fw-semibold text-dark mb-1">Admin Users</h3>
-                    <p class="text-muted d-none d-md-block small mb-0">Manage access</p>
+                    <h3 class="fw-semibold text-dark mb-1">管理员账号</h3>
+                    <p class="text-muted d-none d-md-block small mb-0">管理账号</p>
                 </a>
             </div>
             
             <div class="col-6 col-md-3">
-                <button onclick="exportArticles()" class="action-card text-center border-0 bg-transparent w-100" aria-label="Export articles JSON backup">
+                <button onclick="export文章()" class="action-card text-center border-0 bg-transparent w-100" aria-label="导出文章（JSON 备份）">
                     <div class="icon-wrapper mx-auto mb-3" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
                         <i class="fas fa-download text-white fs-4" aria-hidden="true"></i>
                     </div>
-                    <h3 class="fw-semibold text-dark mb-1">Export</h3>
-                    <p class="text-muted d-none d-md-block small mb-0">Download backup</p>
+                    <h3 class="fw-semibold text-dark mb-1">导出</h3>
+                    <p class="text-muted d-none d-md-block small mb-0">下载备份</p>
                 </button>
             </div>
 
             <div class="col-6 col-md-3">
-                <button onclick="openImportModal()" class="action-card text-center border-0 bg-transparent w-100" aria-label="Import articles from JSON backup">
+                <button onclick="open导入Modal()" class="action-card text-center border-0 bg-transparent w-100" aria-label="从 JSON 备份导入文章">
                     <div class="icon-wrapper mx-auto mb-3" style="background: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%);">
                         <i class="fas fa-upload text-white fs-4" aria-hidden="true"></i>
                     </div>
-                    <h3 class="fw-semibold text-dark mb-1">Import</h3>
-                    <p class="text-muted d-none d-md-block small mb-0">Restore data</p>
+                    <h3 class="fw-semibold text-dark mb-1">导入</h3>
+                    <p class="text-muted d-none d-md-block small mb-0">恢复数据</p>
                 </button>
             </div>
         </div>
 
-        <!-- Articles Management -->
+        <!-- 文章 Management -->
         <div class="card border-0 shadow-sm mb-4" style="border-radius: 20px; background: rgba(255,255,255,0.95);">
             <div class="card-header border-0 bg-white px-4 py-3" style="border-radius: 20px 20px 0 0;">
                 <div class="d-flex flex-column sm:flex-row sm:justify-content-between sm:align-items-center gap-3">
                     <div>
-                        <h2 class="fw-bold text-dark mb-1">Articles</h2>
-                        <p class="text-muted small mb-0">Manage your published and draft posts</p>
+                        <h2 class="fw-bold text-dark mb-1">文章</h2>
+                        <p class="text-muted small mb-0">管理你已发布的文章和草稿</p>
                     </div>
                     <a href="/admin/edit" class="btn btn-primary-custom text-white">
-                        <i class="fas fa-plus me-2"></i>New Article
+                        <i class="fas fa-plus me-2"></i>新建文章
                     </a>
                 </div>
             </div>
             <div class="card-body p-4">
                 <div class="d-flex gap-2 mb-4 overflow-x-auto pb-2">
                     <button id="published-tab" class="tab-btn active">
-                        <i class="fas fa-newspaper me-2"></i>Published
+                        <i class="fas fa-newspaper me-2"></i>已发布
                     </button>
                     <button id="drafts-tab" class="tab-btn">
-                        <i class="fas fa-file-lines me-2"></i>Drafts
+                        <i class="fas fa-file-lines me-2"></i>草稿箱
                     </button>
                 </div>
 
                 <div id="published-list" aria-live="polite">
                     <div class="text-center py-5">
                         <div class="spinner-border text-primary mb-3" role="status">
-                            <span class="visually-hidden">Loading...</span>
+                            <span class="visually-hidden">加载中…</span>
                         </div>
-                        <p class="text-muted">Loading articles...</p>
+                        <p class="text-muted">正在加载文章…</p>
                     </div>
                 </div>
 
                 <div id="drafts-list" class="d-none" aria-live="polite">
                     <div class="text-center py-5">
                         <div class="spinner-border text-primary mb-3" role="status">
-                            <span class="visually-hidden">Loading...</span>
+                            <span class="visually-hidden">加载中…</span>
                         </div>
-                        <p class="text-muted">Loading drafts...</p>
+                        <p class="text-muted">正在加载草稿…</p>
                     </div>
                 </div>
             </div>
@@ -381,7 +381,7 @@
 
         <!-- Tools Grid -->
         <div class="row g-4">
-            <!-- SEO Tools -->
+            <!-- SEO 工具 -->
             <div class="col-lg-6">
                 <div class="card border-0 shadow-sm h-100" style="border-radius: 20px; background: rgba(255,255,255,0.95);">
                     <div class="card-header border-0 bg-white px-4 py-3" style="border-radius: 20px 20px 0 0;">
@@ -390,7 +390,7 @@
                                  style="width: 40px; height: 40px; background: linear-gradient(135deg, #f43f5e 0%, #fb7185 100%);">
                                 <i class="fas fa-chart-line text-white"></i>
                             </div>
-                            <h2 class="fw-bold text-dark mb-0">SEO Tools</h2>
+                            <h2 class="fw-bold text-dark mb-0">SEO 工具</h2>
                         </div>
                     </div>
                     <div class="card-body p-4">
@@ -401,8 +401,8 @@
                                     <i class="fas fa-rss text-orange-500"></i>
                                 </div>
                                 <div>
-                                    <h3 class="fw-semibold text-dark mb-0">RSS Feed</h3>
-                                    <p class="text-muted small mb-0">Subscribe to content updates</p>
+                                    <h3 class="fw-semibold text-dark mb-0">RSS 订阅</h3>
+                                    <p class="text-muted small mb-0">订阅内容更新</p>
                                 </div>
                             </div>
                             <i class="fas fa-external-link-alt text-muted"></i>
@@ -415,8 +415,8 @@
                                     <i class="fas fa-sitemap text-purple-500"></i>
                                 </div>
                                 <div>
-                                    <h3 class="fw-semibold text-dark mb-0">Sitemap</h3>
-                                    <p class="text-muted small mb-0">Search engine indexing</p>
+                                    <h3 class="fw-semibold text-dark mb-0">站点地图</h3>
+                                    <p class="text-muted small mb-0">搜索引擎收录</p>
                                 </div>
                             </div>
                             <i class="fas fa-external-link-alt text-muted"></i>
@@ -425,7 +425,7 @@
                 </div>
             </div>
 
-            <!-- System Tools -->
+            <!-- 系统工具 -->
             <div class="col-lg-6">
                 <div class="card border-0 shadow-sm h-100" style="border-radius: 20px; background: rgba(255,255,255,0.95);">
                     <div class="card-header border-0 bg-white px-4 py-3" style="border-radius: 20px 20px 0 0;">
@@ -434,19 +434,19 @@
                                  style="width: 40px; height: 40px; background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);">
                                 <i class="fas fa-cog text-white"></i>
                             </div>
-                            <h2 class="fw-bold text-dark mb-0">System Tools</h2>
+                            <h2 class="fw-bold text-dark mb-0">系统工具</h2>
                         </div>
                     </div>
                     <div class="card-body p-4">
-                        <button onclick="fixMissingArticles()" class="tool-card w-100 d-flex align-items-center justify-content-between text-start border-0 bg-transparent mb-3">
+                        <button onclick="fixMissing文章()" class="tool-card w-100 d-flex align-items-center justify-content-between text-start border-0 bg-transparent mb-3">
                             <div class="d-flex align-items-center">
                                 <div class="rounded-3 d-flex align-items-center justify-content-center me-3" 
                                      style="width: 44px; height: 44px; background: linear-gradient(135deg, #fde68a 0%, #fcd34d 100%);">
                                     <i class="fas fa-wrench text-yellow-600"></i>
                                 </div>
                                 <div>
-                                    <h3 class="fw-semibold text-dark mb-0">Fix Articles</h3>
-                                    <p class="text-muted small mb-0">Repair missing data</p>
+                                    <h3 class="fw-semibold text-dark mb-0">修复文章</h3>
+                                    <p class="text-muted small mb-0">修复缺失数据</p>
                                 </div>
                             </div>
                             <i class="fas fa-arrow-right text-muted"></i>
@@ -459,8 +459,8 @@
                                     <i class="fas fa-bug text-purple-600"></i>
                                 </div>
                                 <div>
-                                    <h3 class="fw-semibold text-dark mb-0">System Info</h3>
-                                    <p class="text-muted small mb-0">Debug information</p>
+                                    <h3 class="fw-semibold text-dark mb-0">系统信息</h3>
+                                    <p class="text-muted small mb-0">调试信息</p>
                                 </div>
                             </div>
                             <i class="fas fa-arrow-right text-muted"></i>
@@ -471,7 +471,7 @@
         </div>
     </div>
 
-    <!-- Import Modal -->
+    <!-- 导入 Modal -->
     <div id="import-modal" class="modal fade" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content border-0 shadow-lg" style="border-radius: 20px;">
@@ -481,24 +481,24 @@
                              style="width: 40px; height: 40px; background: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%);">
                             <i class="fas fa-upload text-white" aria-hidden="true"></i>
                         </div>
-                        <h5 class="modal-title fw-bold">Import Articles</h5>
+                        <h5 class="modal-title fw-bold">导入文章</h5>
                     </div>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close modal"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="关闭"></button>
                 </div>
                 
                 <div class="modal-body">
                     <div class="mb-4">
-                        <label class="form-label fw-semibold">Select File</label>
+                        <label class="form-label fw-semibold">选择文件</label>
                         <input type="file" id="import-file" accept=".json" class="form-control rounded-3 border-2" style="border-color: #eef2ff;">
                         <p class="text-muted small mt-2">
-                            <i class="fas fa-info-circle me-1"></i>Select exported JSON backup file
+                            <i class="fas fa-info-circle me-1"></i>选择导出的 JSON 备份文件
                         </p>
                     </div>
                     
                     <div class="d-flex gap-3">
-                        <button type="button" class="btn btn-light flex-fill py-2 rounded-3" data-bs-dismiss="modal">Cancel</button>
-                        <button onclick="importArticles()" class="btn btn-secondary-custom flex-fill py-2 rounded-3">
-                            <i class="fas fa-upload me-2"></i>Import
+                        <button type="button" class="btn btn-light flex-fill py-2 rounded-3" data-bs-dismiss="modal">取消</button>
+                        <button onclick="import文章()" class="btn btn-secondary-custom flex-fill py-2 rounded-3">
+                            <i class="fas fa-upload me-2"></i>导入
                         </button>
                     </div>
                 </div>
@@ -516,26 +516,26 @@
                              style="width: 40px; height: 40px; background: linear-gradient(135deg, #c4b5fd 0%, #a78bfa 100%);">
                             <i class="fas fa-bug text-purple-600" aria-hidden="true"></i>
                         </div>
-                        <h5 class="modal-title fw-bold">System Information</h5>
+                        <h5 class="modal-title fw-bold">系统信息</h5>
                     </div>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close modal"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="关闭"></button>
                 </div>
                 
                 <div class="modal-body">
                     <div id="debug-content" class="bg-light rounded-3 p-4">
                         <div class="text-center py-4">
                             <div class="spinner-border text-primary mb-3" role="status">
-                                <span class="visually-hidden">Loading...</span>
+                                <span class="visually-hidden">加载中…</span>
                             </div>
-                            <p class="text-muted">Loading system info...</p>
+                            <p class="text-muted">正在加载系统信息…</p>
                         </div>
                     </div>
                 </div>
                 
                 <div class="modal-footer border-0 pt-0">
-                    <button type="button" class="btn btn-light flex-fill py-2 rounded-3" data-bs-dismiss="modal">Close</button>
-                    <button onclick="fixMissingArticles()" class="btn btn-secondary-custom flex-fill py-2 rounded-3">
-                        <i class="fas fa-wrench me-2"></i>Fix Articles
+                    <button type="button" class="btn btn-light flex-fill py-2 rounded-3" data-bs-dismiss="modal">关闭</button>
+                    <button onclick="fixMissing文章()" class="btn btn-secondary-custom flex-fill py-2 rounded-3">
+                        <i class="fas fa-wrench me-2"></i>修复文章
                     </button>
                 </div>
             </div>
@@ -556,8 +556,8 @@
                 history.replaceState(null, '', newUrl);
             }
             
-            loadArticles();
-            loadDrafts();
+            load文章();
+            load草稿箱();
         });
 
         function switchTab(tab) {
@@ -567,19 +567,19 @@
             document.getElementById('drafts-list').classList.toggle('d-none', tab !== 'drafts');
 
             if (tab === 'published') {
-                loadArticles();
+                load文章();
             } else if (tab === 'drafts') {
-                loadDrafts();
+                load草稿箱();
             }
         }
 
         document.getElementById('published-tab').addEventListener('click', () => switchTab('published'));
         document.getElementById('drafts-tab').addEventListener('click', () => switchTab('drafts'));
 
-        async function loadArticles() {
+        async function load文章() {
             try {
                 const response = await fetch(window.location.origin + '/api/articles');
-                if (!response.ok) throw new Error('Failed to load articles');
+                if (!response.ok) throw new Error('文章加载失败');
                 const articles = await response.json();
                 const container = document.getElementById('published-list');
 
@@ -587,10 +587,10 @@
                     container.innerHTML = `
                         <div class="text-center py-5">
                             <i class="fas fa-newspaper text-muted mb-3" style="font-size: 2rem; opacity: 0.3;"></i>
-                            <h3 class="fw-bold text-dark mb-2">No Published Articles</h3>
-                            <p class="text-muted mb-4">Start creating amazing content!</p>
+                            <h3 class="fw-bold text-dark mb-2">还没有已发布的文章</h3>
+                            <p class="text-muted mb-4">开始创作吧！</p>
                             <a href="/admin/edit" class="btn btn-primary-custom text-white">
-                                <i class="fas fa-plus me-2"></i>Create Article
+                                <i class="fas fa-plus me-2"></i>写新文章
                             </a>
                         </div>
                     `;
@@ -611,10 +611,10 @@
                                 </div>
                             </div>
                             <div class="d-flex gap-2 sm:ms-4">
-                                <a href="/admin/edit?permalink=${article.permalink}" class="icon-btn edit" title="Edit" aria-label="Edit article ${article.title}">
+                                <a href="/admin/edit?permalink=${article.permalink}" class="icon-btn edit" title="编辑" aria-label="编辑文章 ${article.title}">
                                     <i class="fas fa-edit" aria-hidden="true"></i>
                                 </a>
-                                <button onclick="deleteArticle('${article.permalink}')" class="icon-btn delete" title="Delete" aria-label="Delete article ${article.title}">
+                                <button onclick="deleteArticle('${article.permalink}')" class="icon-btn delete" title="删除" aria-label="删除文章 ${article.title}">
                                     <i class="fas fa-trash" aria-hidden="true"></i>
                                 </button>
                             </div>
@@ -622,24 +622,24 @@
                     </div>
                 `).join('');
             } catch (error) {
-                console.error('Error loading articles:', error);
+                console.error('加载文章出错：', error);
                 const container = document.getElementById('published-list');
                 container.innerHTML = `
                     <div class="text-center py-5">
                         <i class="fas fa-exclamation-triangle text-warning mb-3" style="font-size: 2rem;"></i>
-                        <h3 class="fw-bold text-dark mb-2">Error Loading Articles</h3>
-                        <button onclick="loadArticles()" class="btn btn-primary-custom text-white mt-2">
-                            <i class="fas fa-redo me-2"></i>Try Again
+                        <h3 class="fw-bold text-dark mb-2">文章加载出错</h3>
+                        <button onclick="load文章()" class="btn btn-primary-custom text-white mt-2">
+                            <i class="fas fa-redo me-2"></i>重试
                         </button>
                     </div>
                 `;
             }
         }
 
-        async function loadDrafts() {
+        async function load草稿箱() {
             try {
                 const response = await fetch(window.location.origin + '/api/articles?drafts=true');
-                if (!response.ok) throw new Error('Failed to load drafts');
+                if (!response.ok) throw new Error('草稿加载失败');
                 const drafts = await response.json();
                 const container = document.getElementById('drafts-list');
 
@@ -647,8 +647,8 @@
                     container.innerHTML = `
                         <div class="text-center py-5">
                             <i class="fas fa-file-lines text-muted mb-3" style="font-size: 2rem; opacity: 0.3;"></i>
-                            <h3 class="fw-bold text-dark mb-2">No Drafts</h3>
-                            <p class="text-muted">Your draft articles will appear here</p>
+                            <h3 class="fw-bold text-dark mb-2">没有草稿</h3>
+                            <p class="text-muted">你的草稿会出现在这里</p>
                         </div>
                     `;
                     return;
@@ -659,7 +659,7 @@
                         <div class="d-flex flex-column sm:flex-row sm:justify-content-between sm:align-items-center gap-3">
                             <div class="flex-grow-1 min-w-0">
                                 <div class="d-flex align-items-center gap-2 mb-2 flex-wrap">
-                                    <span class="draft-tag">Draft</span>
+                                    <span class="draft-tag">草稿</span>
                                     <h3 class="fw-semibold text-dark mb-0">${draft.title}</h3>
                                 </div>
                                 <div class="d-flex align-items-center flex-wrap gap-2">
@@ -671,13 +671,13 @@
                                 </div>
                             </div>
                             <div class="d-flex gap-2 sm:ms-4">
-                                <a href="/admin/edit?permalink=${draft.permalink}" class="icon-btn edit" title="Edit" aria-label="Edit draft ${draft.title}">
+                                <a href="/admin/edit?permalink=${draft.permalink}" class="icon-btn edit" title="编辑" aria-label="编辑草稿 ${draft.title}">
                                     <i class="fas fa-edit" aria-hidden="true"></i>
                                 </a>
-                                <button onclick="publishDraft('${draft.permalink}')" class="icon-btn publish" title="Publish" aria-label="Publish draft ${draft.title}">
+                                <button onclick="publish草稿('${draft.permalink}')" class="icon-btn publish" title="发布" aria-label="发布草稿 ${draft.title}">
                                     <i class="fas fa-paper-plane" aria-hidden="true"></i>
                                 </button>
-                                <button onclick="deleteArticle('${draft.permalink}')" class="icon-btn delete" title="Delete" aria-label="Delete draft ${draft.title}">
+                                <button onclick="deleteArticle('${draft.permalink}')" class="icon-btn delete" title="删除" aria-label="删除草稿 ${draft.title}">
                                     <i class="fas fa-trash" aria-hidden="true"></i>
                                 </button>
                             </div>
@@ -690,33 +690,33 @@
                 container.innerHTML = `
                     <div class="text-center py-5 text-danger">
                         <i class="fas fa-exclamation-triangle mb-3" style="font-size: 2rem;"></i>
-                        <h3 class="fw-bold mb-2">Error Loading Drafts</h3>
+                        <h3 class="fw-bold mb-2">草稿加载出错</h3>
                     </div>
                 `;
             }
         }
 
         async function deleteArticle(permalink) {
-            if (!confirm('Are you sure you want to delete this article?')) return;
+            if (!confirm('确定要删除这篇文章吗？')) return;
 
             try {
                 const response = await fetch(window.location.origin + '/api/articles/' + permalink, { method: 'DELETE' });
                 if (response.ok) {
-                    showNotification('Article deleted successfully');
-                    loadArticles();
-                    loadDrafts();
+                    showNotification('文章已删除');
+                    load文章();
+                    load草稿箱();
                 } else {
-                    throw new Error('Delete failed');
+                    throw new Error('删除失败');
                 }
             } catch (error) {
-                showNotification('Error deleting article', 'error');
+                showNotification('删除文章出错', 'error');
             }
         }
 
-        async function publishDraft(permalink) {
+        async function publish草稿(permalink) {
             try {
                 const response = await fetch(window.location.origin + '/api/articles/' + permalink);
-                if (!response.ok) throw new Error('Draft not found');
+                if (!response.ok) throw new Error('草稿不存在');
                 const draft = await response.json();
                 draft.status = 'published';
 
@@ -727,21 +727,21 @@
                 });
 
                 if (updateResponse.ok) {
-                    showNotification('Draft published successfully!');
-                    loadDrafts();
-                    loadArticles();
+                    showNotification('草稿已发布！');
+                    load草稿箱();
+                    load文章();
                 } else {
-                    throw new Error('Publish failed');
+                    throw new Error('发布失败');
                 }
             } catch (error) {
-                showNotification('Error publishing draft', 'error');
+                showNotification('发布草稿出错', 'error');
             }
         }
 
-        async function exportArticles() {
+        async function export文章() {
             try {
                 const response = await fetch(window.location.origin + '/api/export');
-                if (!response.ok) throw new Error('Export failed');
+                if (!response.ok) throw new Error('导出失败');
                 const blob = await response.blob();
                 const url = window.URL.createObjectURL(blob);
                 const a = document.createElement('a');
@@ -751,29 +751,29 @@
                 a.click();
                 window.URL.revokeObjectURL(url);
                 document.body.removeChild(a);
-                showNotification('Articles exported successfully');
+                showNotification('文章导出成功');
             } catch (error) {
-                showNotification('Export failed', 'error');
+                showNotification('导出失败', 'error');
             }
         }
 
-        function openImportModal() {
+        function open导入Modal() {
             importModal.show();
             document.getElementById('import-file').value = '';
         }
 
-        async function importArticles() {
+        async function import文章() {
             const fileInput = document.getElementById('import-file');
             const file = fileInput.files[0];
             if (!file) {
-                showNotification('Please select a file', 'warning');
+                showNotification('请先选择文件', 'warning');
                 return;
             }
             
             try {
                 const text = await file.text();
                 const articles = JSON.parse(text);
-                if (!Array.isArray(articles)) throw new Error('Invalid file format');
+                if (!Array.isArray(articles)) throw new Error('文件格式不对');
 
                 const response = await fetch(window.location.origin + '/api/import', {
                     method: 'POST',
@@ -785,12 +785,12 @@
                 if (response.ok) {
                     showNotification(`Successfully imported ${result.imported} articles`);
                     importModal.hide();
-                    loadArticles();
+                    load文章();
                 } else {
                     throw new Error(result.error);
                 }
             } catch (error) {
-                showNotification('Import failed: ' + error.message, 'error');
+                showNotification('导入失败：' + error.message, 'error');
             }
         }
 
@@ -802,32 +802,32 @@
                 let debugHTML = `
                     <div class="space-y-4">
                         <div class="bg-white rounded-3 p-4 border">
-                            <h4 class="fw-bold text-dark mb-3">System Summary</h4>
+                            <h4 class="fw-bold text-dark mb-3">系统概览</h4>
                             <div class="row g-3">
                                 <div class="col-md-6">
                                     <div class="p-3 rounded-3 text-center" style="background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%);">
                                         <span class="fw-bold text-primary fs-3">${data.total}</span>
-                                        <p class="text-muted small mb-0">Total Articles</p>
+                                        <p class="text-muted small mb-0">文章总数</p>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="p-3 rounded-3 text-center" style="background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);">
                                         <span class="fw-bold text-info fs-3">${data.systemIndexNum || 'N/A'}</span>
-                                        <p class="text-muted small mb-0">System Index</p>
+                                        <p class="text-muted small mb-0">系统索引</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                 `;
 
-                if (data.allArticles && data.allArticles.length > 0) {
+                if (data.all文章 && data.all文章.length > 0) {
                     debugHTML += `
                         <div class="bg-white rounded-3 p-4 border">
-                            <h4 class="fw-bold text-dark mb-3">Article Status</h4>
+                            <h4 class="fw-bold text-dark mb-3">文章状态</h4>
                             <div class="d-flex flex-column gap-2" style="max-height: 300px; overflow-y: auto;">
                     `;
                     
-                    data.allArticles.forEach(item => {
+                    data.all文章.forEach(item => {
                         const statusIcon = item.exists ? 'fa-check-circle text-success' : 'fa-times-circle text-danger';
                         const statusBg = item.exists ? 'bg-success' : 'bg-danger';
                         debugHTML += `
@@ -849,12 +849,12 @@
                 document.getElementById('debug-content').innerHTML = debugHTML;
                 debugModal.show();
             } catch (error) {
-                showNotification('Error loading debug info', 'error');
+                showNotification('调试信息加载出错', 'error');
             }
         }
 
-        async function fixMissingArticles() {
-            if (!confirm('This will attempt to fix any missing article data. Continue?')) return;
+        async function fixMissing文章() {
+            if (!confirm('这会尝试修复缺失的文章数据，继续吗？')) return;
             
             try {
                 const response = await fetch(window.location.origin + '/api/fix-missing-articles', { method: 'POST' });
@@ -863,13 +863,13 @@
                 if (response.ok) {
                     showNotification(`Fixed ${result.fixedCount} articles`, 'success');
                     debugModal.hide();
-                    loadArticles();
-                    loadDrafts();
+                    load文章();
+                    load草稿箱();
                 } else {
                     throw new Error(result.error);
                 }
             } catch (error) {
-                showNotification('Error fixing articles: ' + error.message, 'error');
+                showNotification('修复文章出错：' + error.message, 'error');
             }
         }
 
@@ -878,7 +878,7 @@
                 await fetch('/api/logout', { method: 'POST' });
                 window.location.href = '/login';
             } catch (error) {
-                showNotification('Logout failed', 'error');
+                showNotification('退出失败', 'error');
             }
         }
 

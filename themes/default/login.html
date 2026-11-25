@@ -138,32 +138,32 @@
                             <i class="fas fa-lock"></i>
                         </div>
                         
-                        <h1 class="fw-bold text-dark mb-2">Welcome back</h1>
-                        <p class="text-muted mb-4">Sign in to access the admin panel</p>
+                        <h1 class="fw-bold text-dark mb-2">欢迎回来</h1>
+                        <p class="text-muted mb-4">登录后进入管理后台</p>
                     </div>
 
                     <form id="login-form">
                         <div class="mb-3">
-                            <label for="username" class="form-label fw-semibold">Username</label>
+                            <label for="username" class="form-label fw-semibold">用户名</label>
                             <div class="position-relative">
-                                <input type="text" id="username" required class="form-control form-control-custom ps-5" placeholder="Enter your username" autocomplete="username" />
+                                <input type="text" id="username" required class="form-control form-control-custom ps-5" placeholder="请输入用户名" autocomplete="username" />
                                 <i class="fas fa-user position-absolute top-50 start-0 translate-middle-y ms-3 text-muted" aria-hidden="true"></i>
                             </div>
                         </div>
 
                         <div class="mb-4">
-                            <label for="password" class="form-label fw-semibold">Password</label>
+                            <label for="password" class="form-label fw-semibold">密码</label>
                             <div class="position-relative">
-                                <input type="password" id="password" required class="form-control form-control-custom ps-5" placeholder="Enter your password" autocomplete="current-password" />
+                                <input type="password" id="password" required class="form-control form-control-custom ps-5" placeholder="请输入密码" autocomplete="current-password" />
                                 <i class="fas fa-key position-absolute top-50 start-0 translate-middle-y ms-3 text-muted" aria-hidden="true"></i>
                             </div>
                         </div>
 
                         <button type="submit" id="login-btn" class="btn btn-primary-custom">
-                            <span id="login-text">Sign In</span>
+                            <span id="login-text">登 录</span>
                             <span id="login-spinner" class="d-none">
                                 <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-                                Signing in...
+                                登录中…
                             </span>
                         </button>
                     </form>
@@ -171,7 +171,7 @@
                     <div class="text-center mt-4">
                         <p class="text-muted small mb-0">
                             <i class="fas fa-shield-halved me-1"></i>
-                            Admin access only
+                            仅限管理员登录
                         </p>
                     </div>
                 </div>
@@ -227,7 +227,7 @@
             const loginSpinner = document.getElementById('login-spinner');
             
             if (!username || !password) {
-                showNotification('Please enter both username and password', 'error');
+                showNotification('用户名和密码都要填', 'error');
                 return;
             }
             
@@ -248,14 +248,14 @@
                 if (response.ok) {
                     window.location.href = '/admin/';
                 } else {
-                    showNotification(data.error || 'Invalid credentials', 'error');
+                    showNotification(data.error || '用户名或密码不对', 'error');
                     loginBtn.disabled = false;
                     loginBtn.removeAttribute('aria-disabled');
                     loginText.classList.remove('d-none');
                     loginSpinner.classList.add('d-none');
                 }
             } catch (error) {
-                showNotification('Network error. Please try again.', 'error');
+                showNotification('网络出错，请重试。', 'error');
                 loginBtn.disabled = false;
                 loginBtn.removeAttribute('aria-disabled');
                 loginText.classList.remove('d-none');
