@@ -264,7 +264,7 @@
                             </button>
                         </div>
                         <p class="text-muted small mt-2">
-                            <i class="fas fa-info-circle me-1"></i>网址里用的英文标识
+                            <i class="fas fa-info-circle me-1"></i>已按时间自动生成，不用管它
                         </p>
                     </div>
                     
@@ -354,6 +354,7 @@
             element: document.getElementById('content'),
             spellChecker: false,
             status: false,
+            minHeight: '520px',
             autosave: {
                 enabled: false
             },
@@ -459,13 +460,16 @@
         });
 
         function generateSlugLocal(title) {
-            if (!title) return '';
-            return title
+            const slug = (title || '')
                 .toLowerCase()
                 .trim()
                 .replace(/[^\w\s-]/g, '')
                 .replace(/[\s_-]+/g, '-')
                 .replace(/^-+|-+$/g, '');
+            if (slug) return slug;
+            const d = new Date();
+            const p = n => String(n).padStart(2, '0');
+            return 'post-' + d.getFullYear() + p(d.getMonth() + 1) + p(d.getDate()) + p(d.getHours()) + p(d.getMinutes()) + p(d.getSeconds());
         }
 
         document.getElementById('generate-slug-btn').addEventListener('click', async () => {
@@ -503,6 +507,11 @@
                 btn.innerHTML = originalHtml;
             }
         });
+
+        if (!isEditing) {
+            const pf = document.getElementById('permalink');
+            if (pf && !pf.value) pf.value = generateSlugLocal('');
+        }
 
         document.getElementById('title').addEventListener('blur', () => {
             const permalinkField = document.getElementById('permalink');
