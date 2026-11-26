@@ -295,6 +295,14 @@
                         <i class="fas fa-rss"></i>
                         <span class="d-none d-sm-inline">RSS</span>
                     </a>
+                    <a href="/admin/edit" id="nav-write-btn" class="btn btn-primary-custom text-white rounded-3 px-2 py-2 d-flex align-items-center gap-1" style="display: none !important;">
+                        <i class="fas fa-pen"></i>
+                        <span class="d-none d-sm-inline">写文章</span>
+                    </a>
+                    <a href="/admin" id="nav-admin-btn" class="btn btn-outline-dark rounded-3 px-2 py-2 d-flex align-items-center gap-1" style="display: none !important;">
+                        <i class="fas fa-gauge"></i>
+                        <span class="d-none d-sm-inline">后台</span>
+                    </a>
                 </div>
             </div>
         </div>
@@ -689,6 +697,17 @@
         }
     </script>
     
+    <script>
+        fetch('/api/me').then(function (r) { return r.json(); }).then(function (d) {
+            if (d && d.loggedIn) {
+                ['nav-write-btn', 'nav-admin-btn'].forEach(function (id) {
+                    var el = document.getElementById(id);
+                    if (el) el.style.removeProperty('display');
+                });
+            }
+        }).catch(function () {});
+    </script>
+
     {{codeBeforBody}}
 </body>
 </html>
