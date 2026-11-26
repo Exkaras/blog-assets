@@ -519,12 +519,12 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         let currentAdmins = [];
-        let addAdminModal, editAdminModal, change密码Modal;
+        let addAdminModal, editAdminModal, changePasswordModal;
 
         document.addEventListener('DOMContentLoaded', function () {
             addAdminModal = new bootstrap.Modal(document.getElementById('add-admin-modal'));
             editAdminModal = new bootstrap.Modal(document.getElementById('edit-admin-modal'));
-            change密码Modal = new bootstrap.Modal(document.getElementById('change-password-modal'));
+            changePasswordModal = new bootstrap.Modal(document.getElementById('change-password-modal'));
             
             // Strip credentials from URL to prevent fetch issues
             if (window.location.href.includes('@')) {
@@ -743,18 +743,18 @@
             }
         }
 
-        function openChange密码Modal() {
-            change密码Modal.show();
+        function openChangePasswordModal() {
+            changePasswordModal.show();
             document.getElementById('change-password-form').reset();
             document.getElementById('password-match-error').classList.add('d-none');
         }
 
-        function validate密码Match() {
-            const new密码 = document.getElementById('new-password').value;
-            const confirm密码 = document.getElementById('confirm-new-password').value;
+        function validatePasswordMatch() {
+            const newPassword = document.getElementById('new-password').value;
+            const confirmPassword = document.getElementById('confirm-new-password').value;
             const errorElement = document.getElementById('password-match-error');
 
-            if (confirm密码 && new密码 !== confirm密码) {
+            if (confirmPassword && newPassword !== confirmPassword) {
                 errorElement.classList.remove('d-none');
                 return false;
             }
@@ -763,28 +763,28 @@
         }
 
         document.addEventListener('DOMContentLoaded', function () {
-            const confirm密码Field = document.getElementById('confirm-new-password');
-            if (confirm密码Field) {
-                confirm密码Field.addEventListener('input', validate密码Match);
+            const confirmPasswordField = document.getElementById('confirm-new-password');
+            if (confirmPasswordField) {
+                confirmPasswordField.addEventListener('input', validatePasswordMatch);
             }
         });
 
-        async function change密码() {
-            const current密码 = document.getElementById('current-password').value;
-            const new密码 = document.getElementById('new-password').value;
-            const confirm密码 = document.getElementById('confirm-new-password').value;
+        async function changePassword() {
+            const currentPassword = document.getElementById('current-password').value;
+            const newPassword = document.getElementById('new-password').value;
+            const confirmPassword = document.getElementById('confirm-new-password').value;
 
-            if (!current密码 || !new密码 || !confirm密码) {
+            if (!currentPassword || !newPassword || !confirmPassword) {
                 showNotification('所有字段都要填', 'error');
                 return;
             }
 
-            if (new密码.length < 6) {
+            if (newPassword.length < 6) {
                 showNotification('新密码至少要 6 位', 'error');
                 return;
             }
 
-            if (new密码 !== confirm密码) {
+            if (newPassword !== confirmPassword) {
                 showNotification('两次新密码不一致', 'error');
                 return;
             }
@@ -794,8 +794,8 @@
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        current密码,
-                        new密码
+                        currentPassword,
+                        newPassword
                     }),
                 });
 
@@ -803,7 +803,7 @@
 
                 if (response.ok) {
                     showNotification('密码修改成功', 'success');
-                    change密码Modal.hide();
+                    changePasswordModal.hide();
                     document.getElementById('change-password-form').reset();
                 } else {
                     throw new Error(data.error || '修改密码失败');

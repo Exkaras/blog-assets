@@ -428,7 +428,7 @@
             return parts[parts.length - 1];
         }
 
-        function getArticle收藏() {
+        function getArticleBookmarks() {
             try {
                 return JSON.parse(localStorage.getItem('blog_bookmarks') || '[]');
             } catch {
@@ -436,7 +436,7 @@
             }
         }
 
-        function saveArticle收藏(bookmarks) {
+        function saveArticleBookmarks(bookmarks) {
             try {
                 localStorage.setItem('blog_bookmarks', JSON.stringify(bookmarks));
             } catch (error) {
@@ -444,21 +444,21 @@
             }
         }
 
-        function isArticle收藏ed(permalink) {
-            const bookmarks = getArticle收藏();
+        function isArticleBookmarked(permalink) {
+            const bookmarks = getArticleBookmarks();
             return bookmarks.some(bookmark => bookmark.permalink === permalink);
         }
 
-        function toggleArticle收藏() {
+        function toggleArticleBookmark() {
             const permalink = getArticlePermalink();
             const title = document.title.replace(' - {{siteName}}', '');
-            const bookmarks = getArticle收藏();
+            const bookmarks = getArticleBookmarks();
             const existingIndex = bookmarks.findIndex(bookmark => bookmark.permalink === permalink);
             const btn = document.getElementById('article-bookmark-btn');
             
             if (existingIndex > -1) {
                 bookmarks.splice(existingIndex, 1);
-                saveArticle收藏(bookmarks);
+                saveArticleBookmarks(bookmarks);
                 if (btn) {
                     btn.classList.remove('text-primary');
                     btn.classList.add('text-dark');
@@ -472,7 +472,7 @@
                     label: '',
                     bookmarkedAt: new Date().toISOString()
                 });
-                saveArticle收藏(bookmarks);
+                saveArticleBookmarks(bookmarks);
                 if (btn) {
                     btn.classList.remove('text-dark');
                     btn.classList.add('text-primary');
@@ -490,7 +490,7 @@
             
             const permalink = getArticlePermalink();
             const btn = document.getElementById('article-bookmark-btn');
-            if (btn && isArticle收藏ed(permalink)) {
+            if (btn && isArticleBookmarked(permalink)) {
                 btn.classList.remove('text-dark');
                 btn.classList.add('text-primary');
             }

@@ -404,10 +404,10 @@
 
         document.addEventListener('DOMContentLoaded', function() {
             shareModal = new bootstrap.Modal(document.getElementById('share-modal'));
-            load文章();
+            loadArticles();
         });
 
-        async function load文章(page = 1) {
+        async function loadArticles(page = 1) {
             try {
                 currentPage = page;
                 const response = await fetch(`/api/articles?paginate=true&page=${page}&pageSize=${pageSize}`);
@@ -447,7 +447,7 @@
                 };
 
                 container.innerHTML = articles.map(article => {
-                    const is收藏ed = isArticle收藏ed(article.permalink);
+                    const isBookmarked = isArticleBookmarked(article.permalink);
                     const safeTitle = escapeHtml(article.title);
                     const safeImg = escapeHtml(article.img);
                     const safePermalink = escapeHtml(article.permalink);
@@ -485,10 +485,10 @@
                                         阅读全文 <i class="fas fa-arrow-right ms-1"></i>
                                     </a>
                                     <div class="d-flex gap-2">
-                                        <button onclick="event.stopPropagation(); toggle收藏('${safePermalink}', '${safeTitle}', '${safeImg}', '${safeLabel}')" 
-                                                class="bookmark-btn ${is收藏ed ? 'bookmarked' : ''}"
-                                                title="${is收藏ed ? '取消收藏' : '收藏文章'}"
-                                                aria-label="${is收藏ed ? '取消收藏：' + safeTitle : '收藏文章 ' + safeTitle}">
+                                        <button onclick="event.stopPropagation(); toggleBookmark('${safePermalink}', '${safeTitle}', '${safeImg}', '${safeLabel}')" 
+                                                class="bookmark-btn ${isBookmarked ? 'bookmarked' : ''}"
+                                                title="${isBookmarked ? '取消收藏' : '收藏文章'}"
+                                                aria-label="${isBookmarked ? '取消收藏：' + safeTitle : '收藏文章 ' + safeTitle}">
                                             <i class="fas fa-bookmark" aria-hidden="true"></i>
                                         </button>
                                         <button onclick="event.stopPropagation(); shareArticle('${safePermalink}', '${safeTitle}')" 
@@ -516,7 +516,7 @@
                         </div>
                         <h3 class="fw-bold text-dark mb-2">哎呀，出错了</h3>
                         <p class="text-muted mb-4">文章加载失败，请重试。</p>
-                        <button onclick="load文章()" class="btn btn-primary-custom text-white">
+                        <button onclick="loadArticles()" class="btn btn-primary-custom text-white">
                             <i class="fas fa-redo me-2"></i>重试
                         </button>
                     </div>
@@ -535,7 +535,7 @@
 
             let html = '<div class="d-flex align-items-center gap-2 flex-wrap justify-content-center">';
             
-            html += `<button onclick="load文章(${pagination.page - 1})" 
+            html += `<button onclick="loadArticles(${pagination.page - 1})" 
                 class="pagination-btn"
                 aria-label="上一页"
                 ${!pagination.hasPrevPage ? 'disabled' : ''}>
@@ -546,7 +546,7 @@
             const endPage = Math.min(pagination.totalPages, pagination.page + 2);
 
             for (let i = startPage; i <= endPage; i++) {
-                html += `<button onclick="load文章(${i})" 
+                html += `<button onclick="loadArticles(${i})" 
                     class="pagination-btn ${i === pagination.page ? 'active' : ''}"
                     aria-label="第 ${i} 页"
                     ${i === pagination.page ? 'aria-current="page"' : ''}>
@@ -554,7 +554,7 @@
                 </button>`;
             }
 
-            html += `<button onclick="load文章(${pagination.page + 1})" 
+            html += `<button onclick="loadArticles(${pagination.page + 1})" 
                 class="pagination-btn"
                 aria-label="下一页"
                 ${!pagination.hasNextPage ? 'disabled' : ''}>
@@ -562,12 +562,12 @@
             </button>`;
 
             html += '</div>';
-            html += `<p class="text-muted small mb-0">Page ${pagination.page} of ${pagination.totalPages} &bull; ${pagination.total文章} articles</p>`;
+            html += `<p class="text-muted small mb-0">Page ${pagination.page} of ${pagination.totalPages} &bull; ${pagination.totalArticles} articles</p>`;
 
             container.innerHTML = html;
         }
 
-        function get收藏() {
+        function getBookmarks() {
             try {
                 return JSON.parse(localStorage.getItem('blog_bookmarks') || '[]');
             } catch {
@@ -575,7 +575,7 @@
             }
         }
 
-        function save收藏(bookmarks) {
+        function saveBookmarks(bookmarks) {
             try {
                 localStorage.setItem('blog_bookmarks', JSON.stringify(bookmarks));
             } catch (error) {
@@ -583,18 +583,18 @@
             }
         }
 
-        function isArticle收藏ed(permalink) {
-            const bookmarks = get收藏();
+        function isArticleBookmarked(permalink) {
+            const bookmarks = getBookmarks();
             return bookmarks.some(bookmark => bookmark.permalink === permalink);
         }
 
-        function toggle收藏(permalink, title, img, label) {
-            const bookmarks = get收藏();
+        function toggleBookmark(permalink, title, img, label) {
+            const bookmarks = getBookmarks();
             const existingIndex = bookmarks.findIndex(bookmark => bookmark.permalink === permalink);
             
             if (existingIndex > -1) {
                 bookmarks.splice(existingIndex, 1);
-                save收藏(bookmarks);
+                saveBookmarks(bookmarks);
                 showNotification('已取消收藏', 'warning');
             } else {
                 bookmarks.push({
@@ -604,11 +604,11 @@
                     label,
                     bookmarkedAt: new Date().toISOString()
                 });
-                save收藏(bookmarks);
+                saveBookmarks(bookmarks);
                 showNotification('已收藏！', 'success');
             }
             
-            load文章(currentPage);
+            loadArticles(currentPage);
         }
 
         function shareArticle(permalink, title) {

@@ -257,7 +257,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        function get收藏() {
+        function getBookmarks() {
             try {
                 return JSON.parse(localStorage.getItem('blog_bookmarks') || '[]');
             } catch {
@@ -265,8 +265,8 @@
             }
         }
 
-        function load收藏() {
-            const bookmarks = get收藏();
+        function loadBookmarks() {
+            const bookmarks = getBookmarks();
             const container = document.getElementById('bookmarks-container');
             
             if (bookmarks.length === 0) {
@@ -321,7 +321,7 @@
                                             aria-label="分享文章 ${bookmark.title}">
                                         <i class="fas fa-share-alt" aria-hidden="true"></i>
                                     </button>
-                                    <button onclick="remove收藏('${bookmark.permalink}')"
+                                    <button onclick="removeBookmark('${bookmark.permalink}')"
                                             class="btn btn-delete"
                                             title="取消收藏"
                                             aria-label="取消收藏 ${bookmark.title}">
@@ -336,11 +336,11 @@
             }).join('');
         }
 
-        function remove收藏(permalink) {
-            const bookmarks = get收藏();
+        function removeBookmark(permalink) {
+            const bookmarks = getBookmarks();
             const filtered = bookmarks.filter(bookmark => bookmark.permalink !== permalink);
             localStorage.setItem('blog_bookmarks', JSON.stringify(filtered));
-            load收藏();
+            loadBookmarks();
             showNotification('已取消收藏', 'warning');
         }
 
@@ -398,7 +398,7 @@
             }, 3000);
         }
 
-        document.addEventListener('DOMContentLoaded', load收藏);
+        document.addEventListener('DOMContentLoaded', loadBookmarks);
     </script>
     
     {{codeBeforBody}}
