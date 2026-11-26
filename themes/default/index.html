@@ -719,7 +719,9 @@
     <audio id="bgm-audio" loop preload="metadata" style="display: none;">
         <source src="https://cdn.jsdelivr.net/gh/Exkaras/blog-assets@main/bgm-Twins.mp3" type="audio/mpeg">
     </audio>
+    <div id="bgm-lyric" style="display: none; position: fixed; right: 18px; bottom: 74px; z-index: 1050; max-width: 78vw; background: rgba(30,30,40,.82); color: #fff; font-size: 13px; line-height: 1.5; padding: 7px 12px; border-radius: 10px; text-align: right;"></div>
     <div id="bgm-ctl" style="display: none; position: fixed; right: 18px; bottom: 18px; z-index: 1050; align-items: center; gap: 8px;">
+        <span style="background: rgba(30,30,40,.78); color: #fff; font-size: 12px; padding: 6px 10px; border-radius: 999px; white-space: nowrap;">Twins - 救生圈</span>
         <button type="button" id="bgm-stop" title="停止" style="display: none; width: 38px; height: 38px; border-radius: 50%; border: none; background: rgba(30,30,40,.85); color: #fff; box-shadow: 0 4px 14px rgba(0,0,0,.25); align-items: center; justify-content: center;">
             <i class="fas fa-stop"></i>
         </button>
@@ -737,10 +739,34 @@
             var ctl = document.getElementById('bgm-ctl');
             var btn = document.getElementById('bgm-btn');
             var stopBtn = document.getElementById('bgm-stop');
+            var lyricEl = document.getElementById('bgm-lyric');
             if (!audio || !ctl || !btn || !stopBtn) return;
             var src = audio.querySelector('source');
             if (src) src.addEventListener('error', function () { ctl.style.display = 'none'; });
             audio.addEventListener('loadedmetadata', function () { ctl.style.display = 'flex'; });
+            var bgmLyrics = [];
+            fetch('https://cdn.jsdelivr.net/gh/Exkaras/blog-assets@main/bgm-Twins.lrc').then(function (r) {
+                if (!r.ok) throw new Error('no lrc');
+                return r.text();
+            }).then(function (text) {
+                text.split('\n').forEach(function (line) {
+                    var m = line.match(/\[(\d+):(\d+(?:\.\d+)?)\](.*)/);
+                    if (m) bgmLyrics.push({ t: parseInt(m[1], 10) * 60 + parseFloat(m[2]), text: m[3].trim() });
+                });
+                bgmLyrics.sort(function (a, b) { return a.t - b.t; });
+            }).catch(function () {});
+            audio.addEventListener('timeupdate', function () {
+                if (!bgmLyrics.length || !lyricEl) return;
+                var cur = '';
+                for (var i = 0; i < bgmLyrics.length; i++) {
+                    if (audio.currentTime >= bgmLyrics[i].t) cur = bgmLyrics[i].text;
+                    else break;
+                }
+                if (cur && lyricEl.textContent !== cur) {
+                    lyricEl.textContent = cur;
+                    lyricEl.style.display = 'block';
+                }
+            });
             btn.addEventListener('click', function () {
                 var icon = btn.querySelector('i');
                 if (audio.paused) {
@@ -761,6 +787,7 @@
                 btn.classList.remove('playing');
                 if (icon) icon.className = 'fas fa-music';
                 stopBtn.style.display = 'none';
+                if (lyricEl) lyricEl.style.display = 'none';
             });
         })();
     </script>
