@@ -316,7 +316,7 @@
             </div>
             
             <div class="col-6 col-md-3">
-                <button onclick="export文章()" class="action-card text-center border-0 bg-transparent w-100" aria-label="导出文章（JSON 备份）">
+                <button onclick="exportArticles()" class="action-card text-center border-0 bg-transparent w-100" aria-label="导出文章（JSON 备份）">
                     <div class="icon-wrapper mx-auto mb-3" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
                         <i class="fas fa-download text-white fs-4" aria-hidden="true"></i>
                     </div>
@@ -326,7 +326,7 @@
             </div>
 
             <div class="col-6 col-md-3">
-                <button onclick="open导入Modal()" class="action-card text-center border-0 bg-transparent w-100" aria-label="从 JSON 备份导入文章">
+                <button onclick="openImportModal()" class="action-card text-center border-0 bg-transparent w-100" aria-label="从 JSON 备份导入文章">
                     <div class="icon-wrapper mx-auto mb-3" style="background: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%);">
                         <i class="fas fa-upload text-white fs-4" aria-hidden="true"></i>
                     </div>
@@ -438,7 +438,7 @@
                         </div>
                     </div>
                     <div class="card-body p-4">
-                        <button onclick="fixMissing文章()" class="tool-card w-100 d-flex align-items-center justify-content-between text-start border-0 bg-transparent mb-3">
+                        <button onclick="fixMissingArticles()" class="tool-card w-100 d-flex align-items-center justify-content-between text-start border-0 bg-transparent mb-3">
                             <div class="d-flex align-items-center">
                                 <div class="rounded-3 d-flex align-items-center justify-content-center me-3" 
                                      style="width: 44px; height: 44px; background: linear-gradient(135deg, #fde68a 0%, #fcd34d 100%);">
@@ -497,7 +497,7 @@
                     
                     <div class="d-flex gap-3">
                         <button type="button" class="btn btn-light flex-fill py-2 rounded-3" data-bs-dismiss="modal">取消</button>
-                        <button onclick="import文章()" class="btn btn-secondary-custom flex-fill py-2 rounded-3">
+                        <button onclick="importArticles()" class="btn btn-secondary-custom flex-fill py-2 rounded-3">
                             <i class="fas fa-upload me-2"></i>导入
                         </button>
                     </div>
@@ -534,7 +534,7 @@
                 
                 <div class="modal-footer border-0 pt-0">
                     <button type="button" class="btn btn-light flex-fill py-2 rounded-3" data-bs-dismiss="modal">关闭</button>
-                    <button onclick="fixMissing文章()" class="btn btn-secondary-custom flex-fill py-2 rounded-3">
+                    <button onclick="fixMissingArticles()" class="btn btn-secondary-custom flex-fill py-2 rounded-3">
                         <i class="fas fa-wrench me-2"></i>修复文章
                     </button>
                 </div>
