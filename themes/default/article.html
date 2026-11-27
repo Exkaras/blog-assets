@@ -272,6 +272,22 @@
                         <i class="fas fa-home"></i>
                         <span class="d-none d-sm-inline">首页</span>
                     </a>
+                    <a href="/admin/edit" id="nav-write-btn" class="btn btn-primary-custom text-white rounded-3 px-2 py-2 d-flex align-items-center gap-1" style="display: none !important;">
+                        <i class="fas fa-pen"></i>
+                        <span class="d-none d-sm-inline">写文章</span>
+                    </a>
+                    <a href="#" id="nav-edit-btn" class="btn btn-outline-dark rounded-3 px-2 py-2 d-flex align-items-center gap-1" style="display: none !important;">
+                        <i class="fas fa-pen-to-square"></i>
+                        <span class="d-none d-sm-inline">编辑</span>
+                    </a>
+                    <a href="/admin/" id="nav-admin-btn" class="btn btn-outline-dark rounded-3 px-2 py-2 d-flex align-items-center gap-1" style="display: none !important;">
+                        <i class="fas fa-gauge"></i>
+                        <span class="d-none d-sm-inline">后台</span>
+                    </a>
+                    <button type="button" id="nav-logout-btn" class="btn btn-outline-dark rounded-3 px-2 py-2 d-flex align-items-center gap-1" style="display: none !important;">
+                        <i class="fas fa-right-from-bracket"></i>
+                        <span class="d-none d-sm-inline">退出</span>
+                    </button>
                 </div>
             </div>
         </div>
@@ -672,6 +688,26 @@
                 if (lyricEl) lyricEl.style.display = 'none';
             });
         })();
+    </script>
+
+    <script>
+        fetch('/api/me').then(function (r) { return r.json(); }).then(function (d) {
+            if (d && d.loggedIn) {
+                ['nav-write-btn', 'nav-admin-btn', 'nav-logout-btn'].forEach(function (id) {
+                    var el = document.getElementById(id);
+                    if (el) el.style.removeProperty('display');
+                });
+                var editBtn = document.getElementById('nav-edit-btn');
+                if (editBtn) {
+                    editBtn.href = '/admin/edit?permalink=' + encodeURIComponent(getArticlePermalink());
+                    editBtn.style.removeProperty('display');
+                }
+            }
+        }).catch(function () {});
+        var logoutBtn = document.getElementById('nav-logout-btn');
+        if (logoutBtn) logoutBtn.addEventListener('click', function () {
+            fetch('/api/logout', { method: 'POST' }).then(function () { window.location.href = '/'; }).catch(function () { window.location.href = '/'; });
+        });
     </script>
 
     {{codeBeforBody}}
