@@ -744,6 +744,30 @@
             var src = audio.querySelector('source');
             if (src) src.addEventListener('error', function () { ctl.style.display = 'none'; });
             audio.addEventListener('loadedmetadata', function () { ctl.style.display = 'flex'; });
+            var bgmUserTouched = false;
+            function bgmDisarm() {
+                document.removeEventListener('pointerdown', bgmUnlock);
+                document.removeEventListener('keydown', bgmUnlock);
+                document.removeEventListener('touchstart', bgmUnlock);
+            }
+            function bgmTryPlay() {
+                var p = audio.play();
+                if (p && p.then) p.then(function () {
+                    var icon = btn.querySelector('i');
+                    btn.classList.add('playing');
+                    if (icon) icon.className = 'fas fa-pause';
+                    stopBtn.style.display = 'flex';
+                }).catch(function () {});
+            }
+            function bgmUnlock() {
+                if (bgmUserTouched) { bgmDisarm(); return; }
+                bgmTryPlay();
+                bgmDisarm();
+            }
+            document.addEventListener('pointerdown', bgmUnlock);
+            document.addEventListener('keydown', bgmUnlock);
+            document.addEventListener('touchstart', bgmUnlock);
+            bgmTryPlay();
             var bgmLyrics = [];
             fetch('https://cdn.jsdelivr.net/gh/Exkaras/blog-assets@main/bgm-Twins.lrc').then(function (r) {
                 if (!r.ok) throw new Error('no lrc');
@@ -768,6 +792,8 @@
                 }
             });
             btn.addEventListener('click', function () {
+                bgmUserTouched = true;
+                bgmDisarm();
                 var icon = btn.querySelector('i');
                 if (audio.paused) {
                     audio.play();
@@ -781,6 +807,8 @@
                 }
             });
             stopBtn.addEventListener('click', function () {
+                bgmUserTouched = true;
+                bgmDisarm();
                 var icon = btn.querySelector('i');
                 audio.pause();
                 audio.currentTime = 0;
