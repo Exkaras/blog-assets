@@ -743,7 +743,7 @@
             if (!audio || !ctl || !btn || !stopBtn) return;
             var src = audio.querySelector('source');
             if (src) src.addEventListener('error', function () { ctl.style.display = 'none'; });
-            audio.addEventListener('loadedmetadata', function () { ctl.style.display = 'flex'; });
+            ctl.style.display = 'flex';
             var bgmUserTouched = false;
             function bgmDisarm() {
                 document.removeEventListener('pointerdown', bgmUnlock);
